@@ -1,5 +1,6 @@
 # File Type Checker
 A Python script that adds a **"Check File Types"** option to the Windows right-click context menu. Count file types and open random folders with ease!
+![File Type Checker](https://github.com/user-attachments/assets/802e592a-4a91-4a9e-9685-ddfed024ea3e)
 
 ---
 
