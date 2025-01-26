@@ -56,5 +56,5 @@ CC0 License.
 
 ---
 
-## Author
-javelinsoft
+## contribute
+Modify this program so that it can also run as an executable file.
