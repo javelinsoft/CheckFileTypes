@@ -52,15 +52,53 @@ def display_results(folder_path, file_types, folder_files):
     # Prepare the result message
     result = f"Folder: {folder_path}\n\n"
     result += "File Types and Counts:\n"
-    for ext, count in file_types:
-        result += f"{ext}: {count}\n"
 
-    # Display the result in a label
-    result_label = tk.Label(root, text=result, justify=tk.LEFT)
-    result_label.pack(padx=10, pady=10)
+    # Create a frame for the list and scrollbar
+    frame = tk.Frame(root)
+    frame.pack(padx=10, pady=10)
 
-    # Dropdown to select an extension
-    extensions = [ext for ext, _ in file_types]
+    # Create a Text widget for displaying results
+    text_widget = tk.Text(frame, width=50, height=15)
+    text_widget.pack(side=tk.LEFT)
+
+    # Add a scrollbar
+    scrollbar = tk.Scrollbar(frame, command=text_widget.yview)
+    scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+    text_widget.config(yscrollcommand=scrollbar.set)
+
+    # Function to update the display based on sorting
+    def update_display(sort_by):
+        text_widget.delete(1.0, tk.END)  # Clear the current text
+        if sort_by == "Count":
+            sorted_file_types = sorted(file_types, key=lambda x: x[1], reverse=True)
+        else:  # Sort alphabetically
+            sorted_file_types = sorted(file_types, key=lambda x: x[0])
+
+        for ext, count in sorted_file_types:
+            text_widget.insert(tk.END, f"{ext}: {count}\n")
+
+    # Initial display
+    update_display("Count")
+
+    # Dropdown to select sorting method
+    sort_options = ["Count", "Alphabetical"]
+    selected_sort = tk.StringVar()
+    selected_sort.set(sort_options[0])  # Default to sorting by count
+
+    sort_label = tk.Label(root, text="Sort by:")
+    sort_label.pack(padx=10, pady=5)
+
+    sort_dropdown = ttk.Combobox(root, textvariable=selected_sort, values=sort_options, state="readonly")
+    sort_dropdown.pack(padx=10, pady=5)
+
+    # Update display when sorting option changes
+    def on_sort_change(event):
+        update_display(selected_sort.get())
+
+    sort_dropdown.bind("<<ComboboxSelected>>", on_sort_change)
+
+    # Dropdown to select an extension (always sorted alphabetically)
+    extensions = sorted([ext for ext, _ in file_types])  # Sort extensions alphabetically
     selected_extension = tk.StringVar()
     selected_extension.set(extensions[0])  # Default to the first extension
 
@@ -79,6 +117,7 @@ def display_results(folder_path, file_types, folder_files):
     open_button.pack(padx=10, pady=10)
 
     root.mainloop()
+
 
 def add_context_menu_option():
     try:
