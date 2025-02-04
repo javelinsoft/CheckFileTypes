@@ -58,5 +58,5 @@ CC0 License.
 
 ---
 
-## contribute
+## Contribute
 Modify this program so that it can also run as an executable file.
