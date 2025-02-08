@@ -37,7 +37,7 @@ A Python script that adds a **"Count The File Extensions"** option to the Window
 
 ## Usage
 
-1. **Check File Types:**
+1. **Count the File Types:**
    - Right-click a folder → "Count The File Extensions".
    - A GUI shows file type counts and lets you open random folders.
 
