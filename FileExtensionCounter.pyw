@@ -37,7 +37,7 @@ def open_random_folder(extension, folder_files):
 
 def display_results(folder_path, file_types, folder_files):
     root = tk.Tk()
-    root.title("Count The File Extensions")
+    root.title("File Extension Counter")
 
     script_dir = os.path.dirname(os.path.abspath(__file__))
     ico_path = os.path.join(script_dir, "finder.ico")
