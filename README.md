@@ -1,4 +1,4 @@
-# File Extensions Counter
+# File Extension Counter
 A Python script that adds a **"Count The File Extensions"** option to the Windows right-click context menu. Count file types and open random folders with ease! 
   
 ![File Type Checker](https://github.com/user-attachments/assets/802e592a-4a91-4a9e-9685-ddfed024ea3e)
@@ -7,7 +7,7 @@ A Python script that adds a **"Count The File Extensions"** option to the Window
 
 ## Features
 
-- **Right-Click Integration:** Adds "Check File Types" to folder context menus.
+- **Right-Click Integration:** Adds "Count The File Extensions" to folder context menus.
 - **File Type Counts:** Displays file type counts (sorted by most to least).
 - **Random Folder Navigation:** Opens a random folder containing the selected file type.
 - **Custom Icon:** Uses `finder.ico` for the context menu and GUI.
@@ -17,7 +17,7 @@ A Python script that adds a **"Count The File Extensions"** option to the Window
 ## Installation
 
 1. **Save the Script:**
-   - Save the script as `CheckFileTypes.pyw` in a directory (e.g., `C:\CheckFileTypes.pyw`).
+   - Save the script as `FileExtensionCounter.pyw` in a directory (e.g., `C:\FileExtensionCounter.pyw`).
 
 2. **Add the Icon:**
    - Place `finder.ico` in the same directory as the script.
@@ -25,7 +25,7 @@ A Python script that adds a **"Count The File Extensions"** option to the Window
 3. **Run the Script:**
    - Open Command Prompt as administrator, navigate to the script directory, and run:
      ```bash
-     pythonw FileExtensionsCounter.pyw
+     pythonw FileExtensionCounter.pyw
      ```
 
 4. **Verify:**
