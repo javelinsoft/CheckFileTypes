@@ -54,8 +54,6 @@ def display_results(folder_path, file_types, folder_files):
     file_menu = tk.Menu(menu_bar, tearoff=0)
     menu_bar.add_cascade(label="File", menu=file_menu)
 
-    # Removed the Remove Context Menu Option
-    # file_menu.add_command(label="Remove Context Menu Option", command=remove_context_menu_option)
 
     result = f"Folder: {folder_path}\n\n"
     result += "File Types and Counts:\n"
