@@ -134,7 +134,7 @@ def add_context_menu_option():
             return
 
         # Create the registry key for the context menu
-        key_path = r"Directory\\shell\\FileExtensionsCounter"
+        key_path = r"Directory\\shell\\FileExtensionCounter"
         key = winreg.CreateKey(winreg.HKEY_CLASSES_ROOT, key_path)
         winreg.SetValue(key, "", winreg.REG_SZ, "Count The File Extensions")
 
@@ -161,5 +161,5 @@ if __name__ == "__main__":
         # If no arguments are passed, add the context menu option
         add_context_menu_option()
     elif len(sys.argv) > 1:
-        # If a folder path is passed, run the File Extensions Counter
+        # If a folder path is passed, run the File Extension Counter
         main(sys.argv[1])
