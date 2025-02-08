@@ -1,7 +1,8 @@
 # File Extension Counter
 A Python script that adds a **"Count The File Extensions"** option to the Windows right-click context menu. Count file types and open random folders with ease! 
-  
-![File Type Checker](https://github.com/user-attachments/assets/802e592a-4a91-4a9e-9685-ddfed024ea3e)
+  ![File Extension Counter](https://github.com/user-attachments/assets/7d801e30-4623-4569-a681-495b645f31ff)
+
+
 
 ---
 
