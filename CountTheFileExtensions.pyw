@@ -39,7 +39,7 @@ def open_random_folder(extension, folder_files):
 
 def display_results(folder_path, file_types, folder_files):
     root = tk.Tk()
-    root.title("File Type Checker")
+    root.title("Count The File Extensions")
 
     # Set the icon for the GUI window
     script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -134,9 +134,9 @@ def add_context_menu_option():
             return
 
         # Create the registry key for the context menu
-        key_path = r"Directory\\shell\\CheckFileTypes"
+        key_path = r"Directory\\shell\\CountTheFileExtensions"
         key = winreg.CreateKey(winreg.HKEY_CLASSES_ROOT, key_path)
-        winreg.SetValue(key, "", winreg.REG_SZ, "Check File Types")
+        winreg.SetValue(key, "", winreg.REG_SZ, "Count The File Extensions")
 
         # Set the icon for the context menu
         winreg.SetValueEx(key, "Icon", 0, winreg.REG_SZ, ico_path)
