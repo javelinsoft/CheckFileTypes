@@ -1,7 +1,7 @@
 import os
 import sys
 import tkinter as tk
-from tkinter import ttk, messagebox
+from tkinter import ttk, messagebox, filedialog
 from collections import defaultdict
 import winreg
 import random
@@ -10,8 +10,12 @@ import subprocess
 def count_file_types(folder_path):
     file_types = defaultdict(int)
     folder_files = defaultdict(list)
+    total_files = 0
+    total_folders = 0
 
     for root, dirs, files in os.walk(folder_path):
+        total_folders += len(dirs)
+        total_files += len(files)
         for file in files:
             _, ext = os.path.splitext(file)
             ext = ext.lower()
@@ -22,7 +26,7 @@ def count_file_types(folder_path):
 
     sorted_file_types = sorted(file_types.items(), key=lambda x: x[1], reverse=True)
 
-    return sorted_file_types, folder_files
+    return sorted_file_types, folder_files, total_files, total_folders
 
 def open_random_folder(extension, folder_files):
     if extension in folder_files:
@@ -35,7 +39,7 @@ def open_random_folder(extension, folder_files):
     else:
         messagebox.showinfo("Error", f"Extension not found: {extension}")
 
-def display_results(folder_path, file_types, folder_files):
+def display_results(folder_path, file_types, folder_files, total_files, total_folders):
     root = tk.Tk()
     root.title("File Extension Counter")
 
@@ -54,8 +58,15 @@ def display_results(folder_path, file_types, folder_files):
     file_menu = tk.Menu(menu_bar, tearoff=0)
     menu_bar.add_cascade(label="File", menu=file_menu)
 
+    # Add commands to the File menu
+    file_menu.add_command(label="Open Folder", command=open_folder)
+    file_menu.add_command(label="Exit", command=root.quit)
+    file_menu.add_command(label="About", command=show_about)
 
+    # Construct the result string
     result = f"Folder: {folder_path}\n\n"
+    result += f"Total Files: {total_files}\n"
+    result += f"Total Folders: {total_folders}\n\n"
     result += "File Types and Counts:\n"
 
     frame = tk.Frame(root)
@@ -68,8 +79,11 @@ def display_results(folder_path, file_types, folder_files):
     scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
     text_widget.config(yscrollcommand=scrollbar.set)
 
+    # Insert the result string into the text widget
+    text_widget.insert(tk.END, result)
+
+    # Function to update the display of file types
     def update_display(sort_by):
-        text_widget.delete(1.0, tk.END)
         if sort_by == "Count":
             sorted_file_types = sorted(file_types, key=lambda x: x[1], reverse=True)
         else:
@@ -78,6 +92,7 @@ def display_results(folder_path, file_types, folder_files):
         for ext, count in sorted_file_types:
             text_widget.insert(tk.END, f"{ext}: {count}\n")
 
+    # Initial display of file types
     update_display("Count")
 
     sort_options = ["Count", "Alphabetical"]
@@ -91,7 +106,9 @@ def display_results(folder_path, file_types, folder_files):
     sort_dropdown.pack(padx=10, pady=5)
 
     def on_sort_change(event):
-        update_display(selected_sort.get())
+        text_widget.delete(1.0, tk.END)  # Clear the text widget
+        text_widget.insert(tk.END, result)  # Reinsert the result string
+        update_display(selected_sort.get())  # Update the file types display
 
     sort_dropdown.bind("<<ComboboxSelected>>", on_sort_change)
 
@@ -113,6 +130,20 @@ def display_results(folder_path, file_types, folder_files):
     open_button.pack(padx=10, pady=10)
 
     root.mainloop()
+
+
+def open_folder():
+    folder_path = filedialog.askdirectory()
+    if folder_path:
+        file_types, folder_files, total_files, total_folders = count_file_types(folder_path)
+        display_results(folder_path, file_types, folder_files, total_files, total_folders)
+
+def show_about():
+    messagebox.showinfo("About", "File Extension Counter\n\n"
+                                  "This program counts the number of files and folders in a selected directory.\n"
+                                  "It categorizes files by their extensions and allows you to open a random folder\n"
+                                  "that contains files of a selected extension.\n\n"
+                                  "https://github.com/javelinsoft/file-extension-counter")
 
 def add_context_menu_option():
     try:
@@ -138,11 +169,12 @@ def add_context_menu_option():
         print(f"Failed to add context menu option: {e}")
 
 def main(folder_path):
-    file_types, folder_files = count_file_types(folder_path)
-    display_results(folder_path, file_types, folder_files)
+    file_types, folder_files, total_files, total_folders = count_file_types(folder_path)
+    display_results(folder_path, file_types, folder_files, total_files, total_folders)
 
 if __name__ == "__main__":
     if len(sys.argv) == 1:
         add_context_menu_option()
     elif len(sys.argv) > 1:
         main(sys.argv[1])
+
